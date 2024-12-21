@@ -960,6 +960,16 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
                 if not user_input[CONF_PUBLIC_URL].endswith("/"):
                     user_input[CONF_PUBLIC_URL] = user_input[CONF_PUBLIC_URL] + "/"
 
+            # Validate include_devices and exclude_devices fields
+            user_input[CONF_INCLUDE_DEVICES] = user_input.get(
+                CONF_INCLUDE_DEVICES,
+                self._config_entry.data.get(CONF_INCLUDE_DEVICES, "")
+            )
+            user_input[CONF_EXCLUDE_DEVICES] = user_input.get(
+                CONF_EXCLUDE_DEVICES,
+                self._config_entry.data.get(CONF_EXCLUDE_DEVICES, "")
+            )
+
             self.hass.config_entries.async_update_entry(
                 self._config_entry, data=user_input, options=self._config_entry.options
             )
